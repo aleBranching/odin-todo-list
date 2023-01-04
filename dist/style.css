@@ -1,0 +1,36 @@
+:root {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  /* background-color: red; */
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 0.6fr 4fr 0.3fr;
+  grid-template-areas:
+    "header header"
+    "navbar main"
+    "footer footer";
+}
+
+.header {
+  grid-area: header;
+  background-color: red;
+}
+
+.navbar {
+  grid-area: navbar;
+  background-color: pink;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: aqua;
+}
+.main {
+  grid-area: main;
+  background-color: aquamarine;
+}
