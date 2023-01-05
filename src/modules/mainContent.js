@@ -51,8 +51,10 @@ export default class mainContentUI {
 
   static createTaskForm() {
     // Cheating? yes. Tired? yes.
+    const addTaskForm = document.createElement("div");
+    addTaskForm.classList = addTaskForm;
 
-    return `<div class="addTaskForm">
+    const allHTML = `<div class="addTaskForm">
     <form action="">
       <div>
         <label for="date">Date:</label>
@@ -70,5 +72,8 @@ export default class mainContentUI {
       </div>
     </form>
   </div>`;
+
+    addTaskForm.innerHTML = allHTML;
+    return addTaskForm;
   }
 }
