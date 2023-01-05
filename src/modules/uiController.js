@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-import mainContent from "./mainContent";
+import mainContentUI from "./mainContent";
 
 export default class UIController {
   static loadPage() {
@@ -56,5 +56,9 @@ export default class UIController {
       this.formBTNS();
       // addProjectDOM();
     });
+  }
+
+  static addTaskListener() {
+    document.querySelector(".addTask");
   }
 }

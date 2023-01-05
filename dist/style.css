@@ -6,6 +6,7 @@
   font-family: "Amatic SC", cursive;
   --accent-colour: #019fb6;
   --secondary-accent-colour: #e63946;
+  --third-coloue: #a8dadc;
 }
 
 body {
@@ -48,7 +49,7 @@ body {
   background-color: #a8dadc;
 }
 
-form {
+.projects form {
   margin-top: 10px;
   border: 3px solid var(--secondary-accent-colour);
   border-radius: 10px;
@@ -136,6 +137,7 @@ form .buttons {
 .main .task {
   border: 1px solid red;
   display: flex;
+  align-items: center;
 }
 
 .main .addTask {
@@ -161,6 +163,41 @@ form .buttons {
   accent-color: var(--secondary-accent-colour);
 }
 
-.task div {
+.task .taskInfo {
+  flex-shrink: 0;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+div input[type="date"] {
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: #a8dadc;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+div.functions {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 00.5rem;
+}
+
+.addTaskForm {
+  border: 1px solid red;
+}
+
+.addTaskForm form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskFormButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }

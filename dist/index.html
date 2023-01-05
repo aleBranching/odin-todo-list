@@ -38,16 +38,35 @@
     <div class="footer">Copyright © 2021 aleTesting</div>
     <div class="main">
       <div class="task">
-        <div>
+        <div class="taskInfo">
           <input type="checkbox" name="finishedTask" id="finishedTask" />
-          <div class="noteText">some note</div>
-        </div>
-        <div>
-          <span class="material-symbols-outlined"> delete </span>
           <input type="date" name="" id="" />
+          <div class="noteText">test</div>
+        </div>
+        <div class="functions">
+          <span class="material-symbols-outlined edit"> edit </span>
+          <span class="material-symbols-outlined delete"> delete </span>
         </div>
       </div>
       <div class="addTask">+ Add Task</div>
+      <div class="addTaskForm">
+        <form action="">
+          <div>
+            <label for="date">Date:</label>
+            <input type="date" name="taskDate" id="taskDate" />
+            <label for="Task">Task:</label>
+            <input type="text" name="taskText" id="taskText" />
+          </div>
+          <div class="taskFormButtons">
+            <button id="formSubmit">
+              <span class="material-symbols-outlined">done</span>Submit
+            </button>
+            <button id="formCancel">
+              <span class="material-symbols-outlined">cancel</span>Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
