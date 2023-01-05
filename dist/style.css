@@ -1,6 +1,11 @@
 :root {
   margin: 0;
   padding: 0;
+  /* color: #e63946; */
+  font-size: 20px;
+  font-family: "Amatic SC", cursive;
+  --accent-colour: #019fb6;
+  --secondary-accent-colour: #e63946;
 }
 
 body {
@@ -16,21 +21,146 @@ body {
     "footer footer";
 }
 
+/* Header */
 .header {
   grid-area: header;
-  background-color: red;
+  background-color: #457b9d;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1rem;
+  font-size: 2rem;
 }
 
+.header span {
+  font-size: 2.5rem;
+  padding-right: 0.5rem;
+}
+
+/* navbar */
+.navbar div * {
+  box-sizing: border-box;
+}
 .navbar {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
   grid-area: navbar;
-  background-color: pink;
+  background-color: #a8dadc;
+}
+
+form {
+  margin-top: 10px;
+  border: 3px solid var(--secondary-accent-colour);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+form button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e63946;
+  border-radius: 10px;
+  border: none;
+}
+form button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.navbar div div {
+  padding-top: 10px;
+}
+
+.navbar div:first-child {
+  padding-top: 0.6rem;
+}
+
+.projects form input[type="text"]:focus {
+  background-color: #019fb6;
+}
+
+.projects form input[type="text"] {
+  /* background-color: lightblue; */
+  border-style: solid;
+  outline: none;
+  border: 1px solid;
+}
+
+form .buttons {
+  display: flex;
+  justify-content: space-around;
 }
 
 .footer {
   grid-area: footer;
-  background-color: aqua;
+  background-color: #457b9d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.primary div::after,
+.projects div::after {
+  display: block;
+  content: "";
+  border-bottom: solid 3px #019fb6;
+  transform: scaleX(0);
+  transition: transform 100ms ease-in-out;
+}
+.primary div:hover,
+.projects div:hover {
+  cursor: pointer;
+}
+
+.primary div:hover::after,
+.projects div:hover::after {
+  transform: scaleX(1);
+}
+
+/* main */
+
 .main {
+  padding: 1.5rem;
   grid-area: main;
-  background-color: aquamarine;
+  background-color: #f1faee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.main div {
+  width: 80%;
+}
+
+.main .task {
+  border: 1px solid red;
+  display: flex;
+}
+
+.main .addTask {
+  border: 1px solid red;
+}
+.addTask:hover {
+  cursor: pointer;
+}
+
+.addTask::after {
+  display: block;
+  content: "";
+  border-bottom: solid 3px var(--secondary-accent-colour);
+  transform: scaleX(0);
+  transition: transform 100ms ease-in-out;
+}
+
+.addTask:hover::after {
+  transform: scaleX(1);
+}
+
+.task input[type="checkbox"] {
+  accent-color: var(--secondary-accent-colour);
+}
+
+.task div {
+  display: flex;
 }

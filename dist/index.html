@@ -5,8 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <script src="main.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="header">
+      <span class="material-symbols-outlined"> done_all </span>To do list
+    </div>
+    <div class="navbar">
+      <div class="primary">
+        <div><span class="material-symbols-outlined"> home </span>Main</div>
+        <div><span class="material-symbols-outlined"> today </span>Today</div>
+        <div>
+          <span class="material-symbols-outlined"> date_range </span>This week
+        </div>
+      </div>
+      <div class="projects">
+        <h2>Projects</h2>
+        <div id="projectAdder">+ Add project</div>
+      </div>
+    </div>
+    <div class="footer">Copyright © 2021 aleTesting</div>
+    <div class="main">
+      <div class="task">
+        <div>
+          <input type="checkbox" name="finishedTask" id="finishedTask" />
+          <div class="noteText">some note</div>
+        </div>
+        <div>
+          <span class="material-symbols-outlined"> delete </span>
+          <input type="date" name="" id="" />
+        </div>
+      </div>
+      <div class="addTask">+ Add Task</div>
+    </div>
+  </body>
 </html>

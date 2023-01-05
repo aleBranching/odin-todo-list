@@ -3,6 +3,7 @@ export default class Task {
     this.name = name;
     this.date = date;
     this.priority = priority;
+    this.done = false;
   }
 
   setDate(date) {
