@@ -5,7 +5,7 @@ export default class mainContentUI {
     const taskDiv = document.createElement("div");
     taskDiv.classList = "task";
 
-    const taskInfoDiv = document.createElement("input");
+    const taskInfoDiv = document.createElement("div");
     taskInfoDiv.classList = "taskInfo";
 
     const checkBoxInpt = document.createElement("input");
@@ -28,6 +28,7 @@ export default class mainContentUI {
     taskDiv.appendChild(taskInfoDiv);
 
     const functionDiv = document.createElement("div");
+    functionDiv.classList = "functions";
 
     const spanEdit = document.createElement("span");
     spanEdit.classList = "material-symbols-outlined edit";
@@ -47,14 +48,15 @@ export default class mainContentUI {
     const addTaskDiv = document.createElement("div");
     addTaskDiv.classList = "addTask";
     addTaskDiv.textContent = "+ Add Task";
+    return addTaskDiv;
   }
 
   static createTaskForm() {
     // Cheating? yes. Tired? yes.
     const addTaskForm = document.createElement("div");
-    addTaskForm.classList = addTaskForm;
+    addTaskForm.classList = "addTaskForm";
 
-    const allHTML = `<div class="addTaskForm">
+    const allHTML = `
     <form action="">
       <div>
         <label for="date">Date:</label>
@@ -71,9 +73,20 @@ export default class mainContentUI {
         </button>
       </div>
     </form>
-  </div>`;
+  `;
 
     addTaskForm.innerHTML = allHTML;
+
+    const submitBTN = addTaskForm.querySelector("#formSubmit");
+    const cancelBTN = addTaskForm.querySelector("#formCancel");
+
+    submitBTN.addEventListener("click", (e) => {
+      e.preventDefault();
+    });
+
+    cancelBTN.addEventListener("click", (e) => {
+      e.preventDefault();
+    });
     return addTaskForm;
   }
 }

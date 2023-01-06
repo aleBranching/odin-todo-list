@@ -52,6 +52,12 @@ export default class Navbar {
     return formDiv;
   }
 
+  static returnProjectItem(name) {
+    const project = document.createElement("div");
+    project.textContent = name;
+    return project;
+  }
+
   static returnAddProjectBTN() {
     const addProject = document.createElement("div");
     addProject.textContent = "+ Add project";

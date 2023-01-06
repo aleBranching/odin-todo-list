@@ -60,13 +60,24 @@ form button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e63946;
+  /* background-color: #e63946; */
   border-radius: 10px;
   border: none;
+  background: linear-gradient(
+      to left,
+      rgb(203, 77, 63) 50%,
+      rgb(118, 152, 163) 50%
+    )
+    right;
+  background-size: 200%;
+  transition: 0.1s ease-out;
 }
 form button:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
+  /* background-color: var(--accent-colour);
+  transition: background-color 0.05s ease-in; */
+  background-position: left;
 }
 
 .navbar div div {

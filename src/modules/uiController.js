@@ -4,6 +4,7 @@ import mainContentUI from "./mainContent";
 export default class UIController {
   static loadPage() {
     this.addProjectListener();
+    this.addTaskListener();
     // const bodyDiv = document.querySelector("body");
     // bodyDiv.appendChild(this.createHeader());
     // bodyDiv.appendChild(this.createFooter());
@@ -28,15 +29,25 @@ export default class UIController {
     const cancelBTN = document.querySelector("#formCancel");
     const inputField = document.querySelector("#projectName");
     const form = document.querySelector("#addProjectForm");
+    // console.log(projectListDOMLocation);
+    inputField.focus();
 
     submitBTN.addEventListener("click", (e) => {
+      // const lastProjectDOM = projectListDOM[projectListDOM.length - 1];
+
       e.preventDefault();
-      // console.log(inp);
       if (inputField.value !== "") {
         console.log(inputField.value);
         inputField.textContent = "";
         form.replaceWith(Navbar.returnAddProjectBTN());
         this.addProjectListener();
+
+        const projectListDOMLocation =
+          document.querySelector("div#projectAdder");
+        console.log(projectListDOMLocation);
+        projectListDOMLocation.before(
+          Navbar.returnProjectItem(inputField.value)
+        );
       }
     });
 
@@ -58,7 +69,41 @@ export default class UIController {
     });
   }
 
+  static formTaskListener() {
+    const formSubmitBTN = document.querySelector("#formSubmit");
+    const formCancelBTN = document.querySelector("#formCancel");
+    const formDateInput = document.querySelector("#taskDate");
+    const form = document.querySelector(".addTaskForm");
+
+    const formTextInput = document.querySelector("#taskText");
+    formSubmitBTN.addEventListener("click", (e) => {
+      console.log("zzzz");
+      e.preventDefault();
+      if (formDateInput.value !== "" && formDateInput.value !== "") {
+        const date = formDateInput.value;
+        const text = formTextInput.value;
+
+        form.replaceWith(mainContentUI.createAddTask());
+        const addTask = document.querySelector(".addTask");
+        addTask.before(mainContentUI.createTask(date, text));
+
+        this.addTaskListener();
+      }
+    });
+    console.log(formSubmitBTN);
+    formCancelBTN.addEventListener("click", (e) => {
+      e.preventDefault();
+      form.replaceWith(mainContentUI.createAddTask());
+      this.addTaskListener();
+    });
+  }
+
   static addTaskListener() {
-    document.querySelector(".addTask");
+    const addTaskDOM = document.querySelector(".addTask");
+    addTaskDOM.addEventListener("click", (e) => {
+      e.preventDefault();
+      addTaskDOM.replaceWith(mainContentUI.createTaskForm());
+      this.formTaskListener();
+    });
   }
 }
