@@ -69,6 +69,75 @@ export default class UIController {
     });
   }
 
+  static taskListener(taskDiv) {
+    const deleteButton = taskDiv.querySelector(".delete");
+    const editButton = taskDiv.querySelector(".edit");
+    const checkbox = taskDiv.querySelector("#finishedTask");
+
+    deleteButton.addEventListener("click", () => {
+      taskDiv.remove();
+    });
+
+    editButton.addEventListener("click", () => {
+      const current = taskDiv;
+      // console.log(current.querySelector(".noteText"));
+      const currentText = taskDiv.querySelector(".noteText").textContent;
+      const currentDate = taskDiv.querySelector(`input[type="date"]`).value;
+      const editTaskForm = mainContentUI.createTaskForm();
+
+      console.log("current Text", currentText);
+      console.log("current Date", currentDate);
+
+      editTaskForm.querySelector("#taskText").value = currentText;
+      editTaskForm.querySelector("#taskDate").value = currentDate;
+
+      // editTaskForm.querySelector();
+
+      current.replaceWith(editTaskForm);
+      this.editTaskListener(editTaskForm, current);
+    });
+
+    checkbox.addEventListener("click", () => {
+      taskDiv.classList.toggle("checked");
+    });
+
+    // let;
+  }
+
+  static editTaskListener(editForm, current) {
+    const formSubmitBTN = editForm.querySelector("#formSubmit");
+    const formCancelBTN = editForm.querySelector("#formCancel");
+    const formDateInput = editForm.querySelector("#taskDate");
+    // const form = editForm.querySelector(".addTaskForm");
+
+    const formTextInput = editForm.querySelector("#taskText");
+    formSubmitBTN.addEventListener("click", (e) => {
+      console.log("zzzz");
+      e.preventDefault();
+      if (formDateInput.value !== "" && formDateInput.value !== "") {
+        const date = formDateInput.value;
+        const text = formTextInput.value;
+
+        // editForm.replaceWith(mainContentUI.createTask());
+        // const addTask = editForm.querySelector(".addTask");
+        const task = mainContentUI.createTask(date, text);
+        editForm.replaceWith(task);
+        this.taskListener(task);
+
+        // taskBTNS
+
+        // this.addTaskListener();
+      }
+    });
+    console.log(formSubmitBTN);
+    formCancelBTN.addEventListener("click", (e) => {
+      e.preventDefault();
+      editForm.replaceWith(current);
+      // this.addTaskListener();
+      this.taskListener(current);
+    });
+  }
+
   static formTaskListener() {
     const formSubmitBTN = document.querySelector("#formSubmit");
     const formCancelBTN = document.querySelector("#formCancel");
@@ -85,7 +154,11 @@ export default class UIController {
 
         form.replaceWith(mainContentUI.createAddTask());
         const addTask = document.querySelector(".addTask");
-        addTask.before(mainContentUI.createTask(date, text));
+        const task = mainContentUI.createTask(date, text);
+        this.taskListener(task);
+        addTask.before(task);
+
+        // taskBTNS
 
         this.addTaskListener();
       }
@@ -102,8 +175,13 @@ export default class UIController {
     const addTaskDOM = document.querySelector(".addTask");
     addTaskDOM.addEventListener("click", (e) => {
       e.preventDefault();
-      addTaskDOM.replaceWith(mainContentUI.createTaskForm());
-      this.formTaskListener();
+      if (document.querySelector(".addTaskForm") == null) {
+        const taskFormDOM = mainContentUI.createTaskForm();
+        const dateINPT = taskFormDOM.querySelector("input#taskDate");
+        dateINPT.focus();
+        addTaskDOM.replaceWith(taskFormDOM);
+        this.formTaskListener();
+      }
     });
   }
 }

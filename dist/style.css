@@ -160,6 +160,15 @@ input[type="date"]:read-only {
   align-items: center;
 }
 
+.main .task.checked {
+  /* text-decoration: line-through; */
+  opacity: 0.3;
+}
+
+.functions .material-symbols-outlined:hover {
+  cursor: pointer;
+}
+
 .main .addTask {
   border: 1px solid red;
 }
