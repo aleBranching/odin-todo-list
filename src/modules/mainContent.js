@@ -16,6 +16,7 @@ export default class mainContentUI {
     const dateInpt = document.createElement("input");
     dateInpt.setAttribute("type", "date");
     dateInpt.value = dateTxt;
+    dateInpt.readOnly = true;
 
     const textNode = document.createElement("div");
     textNode.classList = "noteText";

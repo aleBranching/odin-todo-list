@@ -144,6 +144,15 @@ form .buttons {
 .main div {
   width: 80%;
 }
+input[type="date"]:read-only {
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: #a8dadc;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
 
 .main .task {
   border: 1px solid red;
