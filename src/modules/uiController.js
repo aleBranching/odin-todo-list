@@ -4,6 +4,7 @@ import mainContentUI from "./mainContent";
 export default class UIController {
   static loadPage() {
     this.addProjectListener();
+    this.projectListener();
     this.addTaskListener();
     // const bodyDiv = document.querySelector("body");
     // bodyDiv.appendChild(this.createHeader());
@@ -57,6 +58,18 @@ export default class UIController {
 
       form.replaceWith(Navbar.returnAddProjectBTN());
       this.addProjectListener();
+    });
+  }
+
+  static projectListener() {
+    const allProjectsList = document.querySelectorAll("div#projectItem");
+
+    allProjectsList.forEach((aProjectDOM) => {
+      aProjectDOM.addEventListener("click", () => {
+        const projectName = aProjectDOM.textContent;
+
+        console.log(projectName);
+      });
     });
   }
 
@@ -161,6 +174,7 @@ export default class UIController {
         // taskBTNS
 
         this.addTaskListener();
+        this.projectListener();
       }
     });
     console.log(formSubmitBTN);
@@ -180,6 +194,7 @@ export default class UIController {
         const dateINPT = taskFormDOM.querySelector("input#taskDate");
         dateINPT.focus();
         addTaskDOM.replaceWith(taskFormDOM);
+        // this.addTaskListener();
         this.formTaskListener();
       }
     });

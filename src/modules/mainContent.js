@@ -80,8 +80,6 @@ export default class mainContentUI {
 
     const submitBTN = addTaskForm.querySelector("#formSubmit");
     const cancelBTN = addTaskForm.querySelector("#formCancel");
-    const dateINPT = addTaskForm.querySelector("input#taskDate");
-    dateINPT.focus();
 
     submitBTN.addEventListener("click", (e) => {
       e.preventDefault();

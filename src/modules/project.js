@@ -17,10 +17,10 @@ export default class Project {
   }
 
   getTask(taskName) {
-    this.tasks.find((task) => task.getName() === taskName);
+    return this.tasks.find((task) => task.getName() === taskName);
   }
 
   addTask(task) {
-    this.tasks.push(task);
+    return this.tasks.push(task);
   }
 }
