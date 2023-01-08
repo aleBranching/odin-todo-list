@@ -37,9 +37,13 @@ class TodoList {
 const aTodoList = new TodoList();
 aTodoList.addProject("test");
 aTodoList.getAProject("test").addTask(new Task("Do homework", "2023-01-19"));
+aTodoList.getAProject("test").addTask(new Task("todays task", "2023-01-08"));
+aTodoList.getAProject("test").addTask(new Task("todays task", "2023-01-08"));
+
 aTodoList.getAProject("main").addTask(new Task("get rizz", "2023-01-19"));
 aTodoList
   .getAProject("main")
   .addTask(new Task("Go rock climbing", "2024-02-21"));
+aTodoList.getAProject("main").addTask(new Task("read a book", "2023-01-12"));
 
 export default aTodoList;

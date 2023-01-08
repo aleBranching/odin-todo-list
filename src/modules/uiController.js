@@ -1,3 +1,5 @@
+import isToday from "date-fns/isToday";
+import isThisWeek from "date-fns/isThisWeek";
 import Navbar from "./navbar";
 import mainContentUI from "./mainContent";
 import aTodoList from "./todoList";
@@ -102,10 +104,24 @@ export default class UIController {
 
     const mainProject = document.querySelector(".primary > div:nth-child(1)");
 
+    const todaysTasks = document.querySelector(".primary > div:nth-child(2)");
+
+    const thisWeeksTasks = document.querySelector(
+      ".primary > div:nth-child(3)"
+    );
+
     mainProject.addEventListener("click", () => {
       console.log(aTodoList.getAProject("main"));
       // this.updateMainDivProject("main");
       this.differentProjectSelected("main");
+    });
+
+    todaysTasks.addEventListener("click", () => {
+      this.logicTasksByDate("today");
+    });
+
+    thisWeeksTasks.addEventListener("click", () => {
+      this.logicTasksByDate("this week");
     });
 
     // allProjectsList.forEach((aProjectDOM) => {
@@ -254,6 +270,36 @@ export default class UIController {
 
       this.addTaskListener();
     });
+  }
+
+  static logicTasksByDate(time) {
+    if (time === "today") {
+      // console.log(object);
+      const todaysTasks = [];
+
+      aTodoList.getProjects().forEach((aProject) => {
+        aProject.getTasks().forEach((aTask) => {
+          const taskDateOBJ = new Date(aTask.getDate());
+          if (isToday(taskDateOBJ)) {
+            todaysTasks.push(aTask);
+          }
+        });
+      });
+
+      console.log("Todays tasks", todaysTasks);
+    } else if (time === "this week") {
+      const thisWeeksTasks = [];
+
+      aTodoList.getProjects().forEach((aProject) => {
+        aProject.getTasks().forEach((aTask) => {
+          const taskDateOBJ = new Date(aTask.getDate());
+          if (isThisWeek(taskDateOBJ)) {
+            thisWeeksTasks.push(aTask);
+          }
+        });
+      });
+      console.log("This weeks tasks", thisWeeksTasks);
+    }
   }
 
   static addCurrentTasks() {}
