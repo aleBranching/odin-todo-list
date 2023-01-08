@@ -1,5 +1,7 @@
 import Navbar from "./navbar";
 import mainContentUI from "./mainContent";
+import aTodoList from "./todoList";
+import Task from "./task";
 
 export default class UIController {
   static loadPage() {
@@ -13,6 +15,8 @@ export default class UIController {
     // bodyDiv.appendChild(mainContent.createMain());
   }
 
+  static currentProjectOBJ = aTodoList.getAProject("main");
+
   static createHeader() {
     const headerDiv = document.createElement("div");
     headerDiv.classList = "header";
@@ -25,7 +29,7 @@ export default class UIController {
     return footerDiv;
   }
 
-  static formBTNS() {
+  static addProjectFormBTNS() {
     const submitBTN = document.querySelector("#formSubmit");
     const cancelBTN = document.querySelector("#formCancel");
     const inputField = document.querySelector("#projectName");
@@ -37,18 +41,31 @@ export default class UIController {
       // const lastProjectDOM = projectListDOM[projectListDOM.length - 1];
 
       e.preventDefault();
-      if (inputField.value !== "") {
-        console.log(inputField.value);
+      if (
+        inputField.value !== "" &&
+        aTodoList.getAProject(inputField.value) == null
+      ) {
+        // console.log(inputField.value);
         inputField.textContent = "";
         form.replaceWith(Navbar.returnAddProjectBTN());
         this.addProjectListener();
 
         const projectListDOMLocation =
           document.querySelector("div#projectAdder");
-        console.log(projectListDOMLocation);
-        projectListDOMLocation.before(
-          Navbar.returnProjectItem(inputField.value)
-        );
+        // console.log(projectListDOMLocation);
+
+        const aProjectItem = Navbar.returnProjectItem(inputField.value);
+        projectListDOMLocation.before(aProjectItem);
+
+        console.log(aProjectItem);
+        // this.projectListener();
+
+        aTodoList.addProject(inputField.value);
+
+        aProjectItem.addEventListener("click", () => {
+          // console.log("works");
+          this.differentProjectSelected(inputField.value);
+        });
       }
     });
 
@@ -62,22 +79,31 @@ export default class UIController {
   }
 
   static projectListener() {
-    const allProjectsList = document.querySelectorAll("div#projectItem");
+    // const allProjectsList = document.querySelectorAll("div#projectItem");
 
-    allProjectsList.forEach((aProjectDOM) => {
-      aProjectDOM.addEventListener("click", () => {
-        const projectName = aProjectDOM.textContent;
+    const mainProject = document.querySelector(".primary > div:nth-child(1)");
 
-        console.log(projectName);
-      });
+    mainProject.addEventListener("click", () => {
+      console.log(aTodoList.getAProject("main"));
+      // this.updateMainDivProject("main");
+      this.differentProjectSelected("main");
     });
+
+    // allProjectsList.forEach((aProjectDOM) => {
+    //   aProjectDOM.addEventListener("click", () => {
+    //     const projectName = aProjectDOM.textContent;
+    //     // console.log(projectName);
+
+    //     console.log(aTodoList.getAProject(projectName));
+    //   });
+    // });
   }
 
   static addProjectListener() {
     const addProjectDOM = document.querySelector("#projectAdder");
     addProjectDOM.addEventListener("click", () => {
       addProjectDOM.replaceWith(Navbar.loadAddProject());
-      this.formBTNS();
+      this.addProjectFormBTNS();
       // addProjectDOM();
     });
   }
@@ -151,6 +177,38 @@ export default class UIController {
     });
   }
 
+  static differentProjectSelected(projectName) {
+    console.log(aTodoList.getAProject(projectName));
+    this.currentProjectOBJ = aTodoList.getAProject(projectName);
+    this.updateMainDivProject(projectName);
+
+    // currentProjectOBJ =
+  }
+
+  static updateMainDivProject(projectName) {
+    const mainDOM = document.querySelector(".main");
+    mainDOM.dataset.currentProject = projectName;
+    console.log(this.currentProjectOBJ.getTasks());
+    const oldTasks = document.querySelectorAll("div.task");
+    oldTasks.forEach((aSingularTask) => {
+      aSingularTask.remove();
+    });
+
+    this.currentProjectOBJ.getTasks().forEach((aTask) => {
+      // oldTasks.remove();
+      console.log("A task", aTask);
+      const addTask = document.querySelector(".addTask");
+      const task = mainContentUI.createTask(aTask.getName(), aTask.getDate());
+
+      this.taskListener(task);
+      addTask.before(task);
+
+      this.addTaskListener();
+    });
+  }
+
+  static addCurrentTasks() {}
+
   static formTaskListener() {
     const formSubmitBTN = document.querySelector("#formSubmit");
     const formCancelBTN = document.querySelector("#formCancel");
@@ -168,13 +226,13 @@ export default class UIController {
         form.replaceWith(mainContentUI.createAddTask());
         const addTask = document.querySelector(".addTask");
         const task = mainContentUI.createTask(date, text);
+
         this.taskListener(task);
         addTask.before(task);
 
-        // taskBTNS
-
         this.addTaskListener();
-        this.projectListener();
+
+        this.currentProjectOBJ.addTask(new Task(date, text));
       }
     });
     console.log(formSubmitBTN);

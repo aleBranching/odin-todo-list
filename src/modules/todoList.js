@@ -1,7 +1,7 @@
 import Project from "./project";
 import Task from "./task";
 
-export default class TodoList {
+class TodoList {
   constructor() {
     this.projects = [];
     this.projects.push(new Project("main"));
@@ -29,3 +29,6 @@ export default class TodoList {
     return this.projects.push(new Project(`${project}`));
   }
 }
+
+const aTodoList = new TodoList();
+export default aTodoList;

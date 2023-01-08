@@ -1,8 +1,8 @@
 export default class Task {
-  constructor(name, date, priority) {
+  constructor(name, date) {
     this.name = name;
     this.date = date;
-    this.priority = priority;
+    // this.priority = priority;
     this.done = false;
   }
 
@@ -22,11 +22,11 @@ export default class Task {
     return this.name;
   }
 
-  setPriority(priority) {
-    this.priority = priority;
-  }
+  // setPriority(priority) {
+  //   this.priority = priority;
+  // }
 
-  getPriority() {
-    return this.priority;
-  }
+  // getPriority() {
+  //   return this.priority;
+  // }
 }

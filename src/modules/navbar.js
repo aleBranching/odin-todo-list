@@ -55,6 +55,7 @@ export default class Navbar {
   static returnProjectItem(name) {
     const project = document.createElement("div");
     project.textContent = name;
+    project.id = "projectItem";
     return project;
   }
 
