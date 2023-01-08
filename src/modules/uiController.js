@@ -8,6 +8,8 @@ export default class UIController {
     this.addProjectListener();
     this.projectListener();
     this.addTaskListener();
+    this.addCurrentProjects();
+    this.differentProjectSelected("main");
     // const bodyDiv = document.querySelector("body");
     // bodyDiv.appendChild(this.createHeader());
     // bodyDiv.appendChild(this.createFooter());
@@ -78,6 +80,23 @@ export default class UIController {
     });
   }
 
+  static addCurrentProjects() {
+    const currentProjects = aTodoList.getProjectsNotMain();
+    console.log(currentProjects);
+
+    const projectListDOMLocation = document.querySelector("div#projectAdder");
+    // console.log(projectListDOMLocation);
+
+    currentProjects.forEach((aProject) => {
+      const aProjectItem = Navbar.returnProjectItem(aProject.getName());
+      projectListDOMLocation.before(aProjectItem);
+      aProjectItem.addEventListener("click", () => {
+        // console.log("works");
+        this.differentProjectSelected(aProject.getName());
+      });
+    });
+  }
+
   static projectListener() {
     // const allProjectsList = document.querySelectorAll("div#projectItem");
 
@@ -112,9 +131,11 @@ export default class UIController {
     const deleteButton = taskDiv.querySelector(".delete");
     const editButton = taskDiv.querySelector(".edit");
     const checkbox = taskDiv.querySelector("#finishedTask");
+    const currentText2 = taskDiv.querySelector(".noteText").textContent;
 
     deleteButton.addEventListener("click", () => {
       taskDiv.remove();
+      this.currentProjectOBJ.removeTask(currentText2);
     });
 
     editButton.addEventListener("click", () => {
@@ -143,6 +164,16 @@ export default class UIController {
     // let;
   }
 
+  static logicUpdateATask(currentDOM, newName, newDate) {
+    const currentText = currentDOM.querySelector(".noteText").textContent;
+    // const currentDate = currentDOM.querySelector(`input[type="date"]`).value;
+
+    const currentTask = this.currentProjectOBJ.getTask(currentText);
+    // this.currentProjectOBJ.getTask(currentText)
+    currentTask.setName(newName);
+    currentTask.setDate(newDate);
+  }
+
   static editTaskListener(editForm, current) {
     const formSubmitBTN = editForm.querySelector("#formSubmit");
     const formCancelBTN = editForm.querySelector("#formCancel");
@@ -159,10 +190,12 @@ export default class UIController {
 
         // editForm.replaceWith(mainContentUI.createTask());
         // const addTask = editForm.querySelector(".addTask");
+        this.logicUpdateATask(current, text, date);
         const task = mainContentUI.createTask(date, text);
         editForm.replaceWith(task);
         this.taskListener(task);
 
+        this.currentProjectOBJ.getTask();
         // taskBTNS
 
         // this.addTaskListener();
@@ -178,6 +211,13 @@ export default class UIController {
   }
 
   static differentProjectSelected(projectName) {
+    // if the task form is active and different project selected
+    if (document.querySelector(".addTaskForm")) {
+      console.log("exists");
+      const theForm = document.querySelector(".addTaskForm");
+      console.log(theForm);
+      theForm.querySelector("#formCancel").click();
+    }
     console.log(aTodoList.getAProject(projectName));
     this.currentProjectOBJ = aTodoList.getAProject(projectName);
     this.updateMainDivProject(projectName);
@@ -198,7 +238,7 @@ export default class UIController {
       // oldTasks.remove();
       console.log("A task", aTask);
       const addTask = document.querySelector(".addTask");
-      const task = mainContentUI.createTask(aTask.getName(), aTask.getDate());
+      const task = mainContentUI.createTask(aTask.getDate(), aTask.getName());
 
       this.taskListener(task);
       addTask.before(task);
@@ -232,7 +272,7 @@ export default class UIController {
 
         this.addTaskListener();
 
-        this.currentProjectOBJ.addTask(new Task(date, text));
+        this.currentProjectOBJ.addTask(new Task(text, date));
       }
     });
     console.log(formSubmitBTN);

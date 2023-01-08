@@ -11,6 +11,10 @@ class TodoList {
     return this.projects;
   }
 
+  getProjectsNotMain() {
+    return this.projects.filter((aProject) => aProject.getName() !== "main");
+  }
+
   // getProject(name) {
   //   this.projects.forEach((aProject) => {
   //     if (aProject.name === name) {
@@ -31,4 +35,11 @@ class TodoList {
 }
 
 const aTodoList = new TodoList();
+aTodoList.addProject("test");
+aTodoList.getAProject("test").addTask(new Task("Do homework", "2023-01-19"));
+aTodoList.getAProject("main").addTask(new Task("get rizz", "2023-01-19"));
+aTodoList
+  .getAProject("main")
+  .addTask(new Task("Go rock climbing", "2024-02-21"));
+
 export default aTodoList;
