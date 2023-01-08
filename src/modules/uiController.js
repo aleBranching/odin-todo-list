@@ -117,11 +117,13 @@ export default class UIController {
     });
 
     todaysTasks.addEventListener("click", () => {
-      this.logicTasksByDate("today");
+      // this.logicTasksByDate("today");
+      this.updateMainDivProjectByDate("today");
     });
 
     thisWeeksTasks.addEventListener("click", () => {
-      this.logicTasksByDate("this week");
+      // this.logicTasksByDate("this week");
+      this.updateMainDivProjectByDate("this week");
     });
 
     // allProjectsList.forEach((aProjectDOM) => {
@@ -208,7 +210,11 @@ export default class UIController {
         // editForm.replaceWith(mainContentUI.createTask());
         // const addTask = editForm.querySelector(".addTask");
         this.logicUpdateATask(current, text, date);
-        const task = mainContentUI.createTask(date, text);
+        const task = mainContentUI.createTask(
+          date,
+          text,
+          current.dataset.project
+        );
         editForm.replaceWith(task);
         this.taskListener(task);
 
@@ -243,6 +249,10 @@ export default class UIController {
   }
 
   static updateMainDivProject(projectName) {
+    if (document.querySelector(".addTask") == null) {
+      const mainDIV = document.querySelector(".main");
+      mainDIV.append(mainContentUI.createAddTask());
+    }
     const mainDOM = document.querySelector(".main");
     mainDOM.dataset.currentProject = projectName;
     console.log(this.currentProjectOBJ.getTasks());
@@ -257,7 +267,8 @@ export default class UIController {
       const addTask = document.querySelector(".addTask");
       const taskDOM = mainContentUI.createTask(
         aTask.getDate(),
-        aTask.getName()
+        aTask.getName(),
+        projectName
       );
 
       if (aTask.done === true) {
@@ -272,6 +283,44 @@ export default class UIController {
     });
   }
 
+  static updateMainDivProjectByDate(time) {
+    const taskList = this.logicTasksByDate(time);
+    const mainDOM = document.querySelector(".main");
+    mainDOM.dataset.currentProject = "date";
+    console.log(this.currentProjectOBJ.getTasks());
+    const oldTasks = document.querySelectorAll("div.task");
+    oldTasks.forEach((aSingularTask) => {
+      aSingularTask.remove();
+    });
+
+    console.log("!!!!!", taskList);
+
+    taskList.forEach((aTask) => {
+      // oldTasks.remove();
+      console.log("A task", aTask);
+      // const addTask = document.querySelector(".addTask");
+      // addTask.remove()
+      const taskDOM = mainContentUI.createTask(
+        aTask.getDate(),
+        aTask.getName(),
+        aTask.project
+      );
+
+      if (aTask.done === true) {
+        taskDOM.classList.toggle("checked");
+        // taskDiv.classList.toggle("checked");
+      }
+
+      this.taskListener(taskDOM);
+      mainDOM.append(taskDOM);
+
+      // this.addTaskListener();
+    });
+    if (document.querySelector(".addTask")) {
+      document.querySelector(".addTask").remove();
+    }
+  }
+
   static logicTasksByDate(time) {
     if (time === "today") {
       // console.log(object);
@@ -279,6 +328,7 @@ export default class UIController {
 
       aTodoList.getProjects().forEach((aProject) => {
         aProject.getTasks().forEach((aTask) => {
+          console.log("AAAAAAAAAAAAAAA");
           const taskDateOBJ = new Date(aTask.getDate());
           if (isToday(taskDateOBJ)) {
             todaysTasks.push(aTask);
@@ -287,7 +337,9 @@ export default class UIController {
       });
 
       console.log("Todays tasks", todaysTasks);
-    } else if (time === "this week") {
+      return todaysTasks;
+    }
+    if (time === "this week") {
       const thisWeeksTasks = [];
 
       aTodoList.getProjects().forEach((aProject) => {
@@ -299,6 +351,7 @@ export default class UIController {
         });
       });
       console.log("This weeks tasks", thisWeeksTasks);
+      return thisWeeksTasks;
     }
   }
 
@@ -309,6 +362,7 @@ export default class UIController {
     const formCancelBTN = document.querySelector("#formCancel");
     const formDateInput = document.querySelector("#taskDate");
     const form = document.querySelector(".addTaskForm");
+    const currentProject = document.querySelector(".main").dataset.project;
 
     const formTextInput = document.querySelector("#taskText");
     formSubmitBTN.addEventListener("click", (e) => {
@@ -320,14 +374,16 @@ export default class UIController {
 
         form.replaceWith(mainContentUI.createAddTask());
         const addTask = document.querySelector(".addTask");
-        const task = mainContentUI.createTask(date, text);
+        const task = mainContentUI.createTask(date, text, currentProject);
 
         this.taskListener(task);
         addTask.before(task);
 
         this.addTaskListener();
 
-        this.currentProjectOBJ.addTask(new Task(text, date));
+        this.currentProjectOBJ.addTask(
+          new Task(text, date, this.currentProjectOBJ.getName())
+        );
       }
     });
     console.log(formSubmitBTN);

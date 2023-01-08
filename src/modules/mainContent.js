@@ -1,9 +1,15 @@
 import { formatRelative } from "date-fns";
+import aTodoList from "./todoList";
 
 export default class mainContentUI {
-  static createTask(dateTxt, text) {
+  static createTask(dateTxt, text, project) {
+    // let done = false
+
+    // if(aTodoList.)
+
     const taskDiv = document.createElement("div");
     taskDiv.classList = "task";
+    taskDiv.dataset.project = project;
 
     const taskInfoDiv = document.createElement("div");
     taskInfoDiv.classList = "taskInfo";
