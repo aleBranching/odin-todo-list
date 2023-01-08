@@ -159,6 +159,7 @@ export default class UIController {
 
     checkbox.addEventListener("click", () => {
       taskDiv.classList.toggle("checked");
+      this.currentProjectOBJ.getTask(currentText2).toggleDone();
     });
 
     // let;
@@ -238,10 +239,18 @@ export default class UIController {
       // oldTasks.remove();
       console.log("A task", aTask);
       const addTask = document.querySelector(".addTask");
-      const task = mainContentUI.createTask(aTask.getDate(), aTask.getName());
+      const taskDOM = mainContentUI.createTask(
+        aTask.getDate(),
+        aTask.getName()
+      );
 
-      this.taskListener(task);
-      addTask.before(task);
+      if (aTask.done === true) {
+        taskDOM.classList.toggle("checked");
+        // taskDiv.classList.toggle("checked");
+      }
+
+      this.taskListener(taskDOM);
+      addTask.before(taskDOM);
 
       this.addTaskListener();
     });

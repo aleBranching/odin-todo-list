@@ -10,6 +10,10 @@ export default class Task {
     this.date = date;
   }
 
+  toggleDone() {
+    this.done = !this.done;
+  }
+
   getDate() {
     return this.date;
   }
